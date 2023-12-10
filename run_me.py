@@ -5,7 +5,7 @@ from gcodeVisitor import gcodeVisitor
 import time
 
 def main():
-    lexer = gcodeLexer (FileStream("gcode_test"))
+    lexer = gcodeLexer (FileStream("gcode_square"))
     token_stream = CommonTokenStream(lexer)
     parser = gcodeParser(token_stream)
     visitor = gcodeVisitor()
