@@ -1,0 +1,232 @@
+# Generated from gcode.g4 by ANTLR 4.13.1
+# encoding: utf-8
+from antlr4 import *
+from io import StringIO
+import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
+def serializedATN():
+    return [
+        4,1,4,17,2,0,7,0,2,1,7,1,1,0,1,0,3,0,7,8,0,1,1,1,1,1,1,1,1,1,1,1,
+        1,3,1,15,8,1,1,1,0,0,2,0,2,0,0,16,0,6,1,0,0,0,2,14,1,0,0,0,4,7,3,
+        2,1,0,5,7,1,0,0,0,6,4,1,0,0,0,6,5,1,0,0,0,7,1,1,0,0,0,8,9,5,1,0,
+        0,9,10,5,3,0,0,10,15,5,3,0,0,11,12,5,2,0,0,12,13,5,3,0,0,13,15,5,
+        3,0,0,14,8,1,0,0,0,14,11,1,0,0,0,15,3,1,0,0,0,2,6,14
+    ]
+
+class gcodeParser ( Parser ):
+
+    grammarFileName = "gcode.g4"
+
+    atn = ATNDeserializer().deserialize(serializedATN())
+
+    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+
+    sharedContextCache = PredictionContextCache()
+
+    literalNames = [ "<INVALID>", "'G01'", "'print'" ]
+
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "NUMBER", "WS" ]
+
+    RULE_start = 0
+    RULE_expr = 1
+
+    ruleNames =  [ "start", "expr" ]
+
+    EOF = Token.EOF
+    T__0=1
+    T__1=2
+    NUMBER=3
+    WS=4
+
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.13.1")
+        self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
+        self._predicates = None
+
+
+
+
+    class StartContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def expr(self):
+            return self.getTypedRuleContext(gcodeParser.ExprContext,0)
+
+
+        def getRuleIndex(self):
+            return gcodeParser.RULE_start
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterStart" ):
+                listener.enterStart(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitStart" ):
+                listener.exitStart(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStart" ):
+                return visitor.visitStart(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def start(self):
+
+        localctx = gcodeParser.StartContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 0, self.RULE_start)
+        try:
+            self.state = 6
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [1, 2]:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 4
+                self.expr()
+                pass
+            elif token in [-1]:
+                self.enterOuterAlt(localctx, 2)
+
+                pass
+            else:
+                raise NoViableAltException(self)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ExprContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return gcodeParser.RULE_expr
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class PrintlineExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a gcodeParser.ExprContext
+            super().__init__(parser)
+            self.x_cord = None # Token
+            self.y_cord = None # Token
+            self.copyFrom(ctx)
+
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(gcodeParser.NUMBER)
+            else:
+                return self.getToken(gcodeParser.NUMBER, i)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPrintlineExpr" ):
+                listener.enterPrintlineExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPrintlineExpr" ):
+                listener.exitPrintlineExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrintlineExpr" ):
+                return visitor.visitPrintlineExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class DrawlineExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a gcodeParser.ExprContext
+            super().__init__(parser)
+            self.x_cord = None # Token
+            self.y_cord = None # Token
+            self.copyFrom(ctx)
+
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(gcodeParser.NUMBER)
+            else:
+                return self.getToken(gcodeParser.NUMBER, i)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDrawlineExpr" ):
+                listener.enterDrawlineExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDrawlineExpr" ):
+                listener.exitDrawlineExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDrawlineExpr" ):
+                return visitor.visitDrawlineExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+    def expr(self):
+
+        localctx = gcodeParser.ExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_expr)
+        try:
+            self.state = 14
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [1]:
+                localctx = gcodeParser.DrawlineExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 8
+                self.match(gcodeParser.T__0)
+                self.state = 9
+                localctx.x_cord = self.match(gcodeParser.NUMBER)
+                self.state = 10
+                localctx.y_cord = self.match(gcodeParser.NUMBER)
+                pass
+            elif token in [2]:
+                localctx = gcodeParser.PrintlineExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 11
+                self.match(gcodeParser.T__1)
+                self.state = 12
+                localctx.x_cord = self.match(gcodeParser.NUMBER)
+                self.state = 13
+                localctx.y_cord = self.match(gcodeParser.NUMBER)
+                pass
+            else:
+                raise NoViableAltException(self)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+
+
+
