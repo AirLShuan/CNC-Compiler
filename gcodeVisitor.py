@@ -24,9 +24,9 @@ class gcodeVisitor(ParseTreeVisitor):
         cur_pos     = tutu.pos()
 
         if target_x > cur_pos[0]:
-            tutu.right( target_x + cur_pos[0])
+            tutu.right(target_x + cur_pos[0])
         else:
-            tutu.left( cur_pos[0] - target_x)
+            tutu.left(cur_pos[0] - target_x)
 
         if target_y > cur_pos[1]:
             tutu.forward( target_y + cur_pos[1])
