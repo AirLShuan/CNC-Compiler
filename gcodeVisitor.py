@@ -7,8 +7,7 @@ else:
 
 # This class defines a complete generic visitor for a parse tree produced by gcodeParser.
 
-import turtle
-tutu = turtle.Turtle()
+import gcode_functions
 
 class gcodeVisitor(ParseTreeVisitor):
 
@@ -22,11 +21,7 @@ class gcodeVisitor(ParseTreeVisitor):
         target_x = int(ctx.x_cord.text)
         target_y = int(ctx.y_cord.text)
 
-        tutu.penup()
-        tutu.speed('fastest')
-        tutu.goto(target_x, target_y)
-        tutu.speed('normal')
-        tutu.pendown()
+        gcode_functions.G00_functionality(target_x, target_y)
 
         return self.visitChildren(ctx)
 
@@ -36,7 +31,7 @@ class gcodeVisitor(ParseTreeVisitor):
         target_x    = int(ctx.x_cord.text)
         target_y    = int(ctx.y_cord.text)
 
-        tutu.goto(target_x, target_y)
+        gcode_functions.G01_functionality(target_x, target_y)
 
         return self.visitChildren(ctx)
 
@@ -46,16 +41,8 @@ class gcodeVisitor(ParseTreeVisitor):
         start = int(ctx.x_cord.text)
         end = int(ctx.y_cord.text)
         radius = int(ctx.radius.text)
-        radius = radius * -1
-
-        if start > end:
-            length = start - end
-        elif end > start:
-            length = end - start
-        else:
-            length = None
         
-        tutu.circle(radius, length)
+        gcode_functions.G02_functionality(start, end, radius)
 
         return self.visitChildren(ctx)
 
@@ -65,21 +52,19 @@ class gcodeVisitor(ParseTreeVisitor):
         end = int(ctx.y_cord.text)
         radius = int(ctx.radius.text)
 
-        if start > end:
-            length = start - end
-        elif end > start:
-            length = end - start
-        else:
-            length = None
-        
-        tutu.circle(radius, length)
+        gcode_functions.G03_functionality(start, end, radius)
+
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by gcodeParser#printlineExpr.
     def visitPrintlineExpr(self, ctx:gcodeParser.PrintlineExprContext):
-        print(f"Draw line to x={ctx.x_cord.text} y={ctx.y_cord.text}")
+        x = int(ctx.x_cord.text)
+        y = int(ctx.y_cord.text)
 
-        return self.visitChildren(ctx)
+        gcode_functions.print_functionality()
+
+        return self.visitChildren(x, y)
+
 
 del gcodeParser
