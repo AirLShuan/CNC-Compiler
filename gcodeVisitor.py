@@ -19,8 +19,8 @@ class gcodeVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by gcodeParser#nodrawExpr.
     def visitNodrawExpr(self, ctx:gcodeParser.NodrawExprContext):
-        target_x    = int(ctx.x_cord.text)
-        target_y    = int(ctx.y_cord.text)
+        target_x = int(ctx.x_cord.text)
+        target_y = int(ctx.y_cord.text)
 
         tutu.penup()
         tutu.speed('fastest')
@@ -36,15 +36,13 @@ class gcodeVisitor(ParseTreeVisitor):
         target_x    = int(ctx.x_cord.text)
         target_y    = int(ctx.y_cord.text)
 
-
         tutu.goto(target_x, target_y)
+
         return self.visitChildren(ctx)
 
 
-
-
-    # Visit a parse tree produced by gcodeParser#clockwisecircleExpr.
-    def visitClockwisecircleExpr(self, ctx:gcodeParser.ClockwisecircleExprContext):
+    # Visit a parse tree produced by gcodeParser#drawccExpr.
+    def visitDrawccExpr(self, ctx:gcodeParser.DrawccExprContext):
         start = int(ctx.x_cord.text)
         end = int(ctx.y_cord.text)
         radius = int(ctx.radius.text)
@@ -61,10 +59,27 @@ class gcodeVisitor(ParseTreeVisitor):
 
         return self.visitChildren(ctx)
 
+    # Visit a parse tree produced by gcodeParser#drawcccExpr.
+    def visitDrawcccExpr(self, ctx:gcodeParser.DrawcccExprContext):
+        start = int(ctx.x_cord.text)
+        end = int(ctx.y_cord.text)
+        radius = int(ctx.radius.text)
+
+        if start > end:
+            length = start - end
+        elif end > start:
+            length = end - start
+        else:
+            length = None
+        
+        tutu.circle(radius, length)
+        return self.visitChildren(ctx)
+
 
     # Visit a parse tree produced by gcodeParser#printlineExpr.
     def visitPrintlineExpr(self, ctx:gcodeParser.PrintlineExprContext):
         print(f"Draw line to x={ctx.x_cord.text} y={ctx.y_cord.text}")
+
         return self.visitChildren(ctx)
 
 del gcodeParser

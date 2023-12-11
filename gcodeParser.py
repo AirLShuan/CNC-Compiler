@@ -10,14 +10,15 @@ else:
 
 def serializedATN():
     return [
-        4,1,6,24,2,0,7,0,2,1,7,1,1,0,1,0,3,0,7,8,0,1,1,1,1,1,1,1,1,1,1,1,
-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,22,8,1,1,1,0,0,2,0,2,0,0,25,0,
-        6,1,0,0,0,2,21,1,0,0,0,4,7,3,2,1,0,5,7,1,0,0,0,6,4,1,0,0,0,6,5,1,
-        0,0,0,7,1,1,0,0,0,8,9,5,1,0,0,9,10,5,5,0,0,10,22,5,5,0,0,11,12,5,
-        2,0,0,12,13,5,5,0,0,13,22,5,5,0,0,14,15,5,3,0,0,15,16,5,5,0,0,16,
-        17,5,5,0,0,17,22,5,5,0,0,18,19,5,4,0,0,19,20,5,5,0,0,20,22,5,5,0,
-        0,21,8,1,0,0,0,21,11,1,0,0,0,21,14,1,0,0,0,21,18,1,0,0,0,22,3,1,
-        0,0,0,2,6,21
+        4,1,7,28,2,0,7,0,2,1,7,1,1,0,1,0,3,0,7,8,0,1,1,1,1,1,1,1,1,1,1,1,
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,26,8,1,1,1,0,0,
+        2,0,2,0,0,30,0,6,1,0,0,0,2,25,1,0,0,0,4,7,3,2,1,0,5,7,1,0,0,0,6,
+        4,1,0,0,0,6,5,1,0,0,0,7,1,1,0,0,0,8,9,5,1,0,0,9,10,5,6,0,0,10,26,
+        5,6,0,0,11,12,5,2,0,0,12,13,5,6,0,0,13,26,5,6,0,0,14,15,5,3,0,0,
+        15,16,5,6,0,0,16,17,5,6,0,0,17,26,5,6,0,0,18,19,5,4,0,0,19,20,5,
+        6,0,0,20,21,5,6,0,0,21,26,5,6,0,0,22,23,5,5,0,0,23,24,5,6,0,0,24,
+        26,5,6,0,0,25,8,1,0,0,0,25,11,1,0,0,0,25,14,1,0,0,0,25,18,1,0,0,
+        0,25,22,1,0,0,0,26,3,1,0,0,0,2,6,25
     ]
 
 class gcodeParser ( Parser ):
@@ -30,10 +31,10 @@ class gcodeParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'G00'", "'G01'", "'G02'", "'print'" ]
+    literalNames = [ "<INVALID>", "'G00'", "'G01'", "'G02'", "'G03'", "'print'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "NUMBER", "WS" ]
+                      "<INVALID>", "<INVALID>", "NUMBER", "WS" ]
 
     RULE_start = 0
     RULE_expr = 1
@@ -45,8 +46,9 @@ class gcodeParser ( Parser ):
     T__1=2
     T__2=3
     T__3=4
-    NUMBER=5
-    WS=6
+    T__4=5
+    NUMBER=6
+    WS=7
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -96,7 +98,7 @@ class gcodeParser ( Parser ):
             self.state = 6
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [1, 2, 3, 4]:
+            if token in [1, 2, 3, 4, 5]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 4
                 self.expr()
@@ -163,7 +165,7 @@ class gcodeParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ClockwisecircleExprContext(ExprContext):
+    class DrawcccExprContext(ExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a gcodeParser.ExprContext
             super().__init__(parser)
@@ -179,16 +181,16 @@ class gcodeParser ( Parser ):
                 return self.getToken(gcodeParser.NUMBER, i)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClockwisecircleExpr" ):
-                listener.enterClockwisecircleExpr(self)
+            if hasattr( listener, "enterDrawcccExpr" ):
+                listener.enterDrawcccExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClockwisecircleExpr" ):
-                listener.exitClockwisecircleExpr(self)
+            if hasattr( listener, "exitDrawcccExpr" ):
+                listener.exitDrawcccExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitClockwisecircleExpr" ):
-                return visitor.visitClockwisecircleExpr(self)
+            if hasattr( visitor, "visitDrawcccExpr" ):
+                return visitor.visitDrawcccExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -218,6 +220,36 @@ class gcodeParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPrintlineExpr" ):
                 return visitor.visitPrintlineExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class DrawccExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a gcodeParser.ExprContext
+            super().__init__(parser)
+            self.x_cord = None # Token
+            self.y_cord = None # Token
+            self.radius = None # Token
+            self.copyFrom(ctx)
+
+        def NUMBER(self, i:int=None):
+            if i is None:
+                return self.getTokens(gcodeParser.NUMBER)
+            else:
+                return self.getToken(gcodeParser.NUMBER, i)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDrawccExpr" ):
+                listener.enterDrawccExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDrawccExpr" ):
+                listener.exitDrawccExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDrawccExpr" ):
+                return visitor.visitDrawccExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -257,7 +289,7 @@ class gcodeParser ( Parser ):
         localctx = gcodeParser.ExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_expr)
         try:
-            self.state = 21
+            self.state = 25
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [1]:
@@ -281,7 +313,7 @@ class gcodeParser ( Parser ):
                 localctx.y_cord = self.match(gcodeParser.NUMBER)
                 pass
             elif token in [3]:
-                localctx = gcodeParser.ClockwisecircleExprContext(self, localctx)
+                localctx = gcodeParser.DrawccExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 14
                 self.match(gcodeParser.T__2)
@@ -293,13 +325,25 @@ class gcodeParser ( Parser ):
                 localctx.radius = self.match(gcodeParser.NUMBER)
                 pass
             elif token in [4]:
-                localctx = gcodeParser.PrintlineExprContext(self, localctx)
+                localctx = gcodeParser.DrawcccExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 18
                 self.match(gcodeParser.T__3)
                 self.state = 19
                 localctx.x_cord = self.match(gcodeParser.NUMBER)
                 self.state = 20
+                localctx.y_cord = self.match(gcodeParser.NUMBER)
+                self.state = 21
+                localctx.radius = self.match(gcodeParser.NUMBER)
+                pass
+            elif token in [5]:
+                localctx = gcodeParser.PrintlineExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 5)
+                self.state = 22
+                self.match(gcodeParser.T__4)
+                self.state = 23
+                localctx.x_cord = self.match(gcodeParser.NUMBER)
+                self.state = 24
                 localctx.y_cord = self.match(gcodeParser.NUMBER)
                 pass
             else:

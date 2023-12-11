@@ -35,12 +35,21 @@ class gcodeListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by gcodeParser#clockwisecircleExpr.
-    def enterClockwisecircleExpr(self, ctx:gcodeParser.ClockwisecircleExprContext):
+    # Enter a parse tree produced by gcodeParser#drawccExpr.
+    def enterDrawccExpr(self, ctx:gcodeParser.DrawccExprContext):
         pass
 
-    # Exit a parse tree produced by gcodeParser#clockwisecircleExpr.
-    def exitClockwisecircleExpr(self, ctx:gcodeParser.ClockwisecircleExprContext):
+    # Exit a parse tree produced by gcodeParser#drawccExpr.
+    def exitDrawccExpr(self, ctx:gcodeParser.DrawccExprContext):
+        pass
+
+
+    # Enter a parse tree produced by gcodeParser#drawcccExpr.
+    def enterDrawcccExpr(self, ctx:gcodeParser.DrawcccExprContext):
+        pass
+
+    # Exit a parse tree produced by gcodeParser#drawcccExpr.
+    def exitDrawcccExpr(self, ctx:gcodeParser.DrawcccExprContext):
         pass
 
 
